@@ -1,0 +1,85 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    x:Class="WpfApp1.DXWindow1"
+    Title="测试系统" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <DataGrid BorderThickness="1" ItemsSource="{Binding MyProperty}"  AutoGenerateColumns="False" SelectedItem="{Binding SelectedProcess}" SelectionMode="Single" x:Name="DataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="进程名称" Binding="{Binding ProcessName}" IsReadOnly="True" MaxWidth="250"/>
+                    <DataGridTextColumn Header="进程标识" Binding="{Binding Id}" IsReadOnly="True" MinWidth="100"/>
+                    <DataGridTextColumn Header="名称" Binding="{Binding MainWindowTitle}" IsReadOnly="True" MinWidth="125"/>
+                    <DataGridTextColumn Header="句柄数" Binding="{Binding HandleCount}" IsReadOnly="True" MinWidth="125"/>
+                    <DataGridTextColumn Header="内存" Binding="{Binding PagedMemorySize64}" IsReadOnly="True" MinWidth="125"/>
+                    <DataGridCheckBoxColumn Header="选择" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Content="刷新任务" Style="{StaticResource ButtonInfo}" Margin="10,0,0,0"   Click="Button_Click_Refresh"></Button>
+                <Button  Content="结束任务"  Margin="10,0,0,0"   Click="Button_Click">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonDanger}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem,ElementName=DataGrid}" Value="{x:Null}"><!--值为空时-->
+                                    <Setter Property="Background" Value="Gray"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button  Content="重启任务"  Margin="10,0,0,0"  RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <RotateTransform x:Name="ButtonRotate" Angle="0"/>
+                    </Button.RenderTransform>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="180" Duration="0:0:2" 
+                                                     Storyboard.TargetName="ButtonRotate"
+                                                     Storyboard.TargetProperty="Angle">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ButtonDanger}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem,ElementName=DataGrid}" Value="{x:Null}">
+                                    <!--值为空时-->
+                                    <Setter Property="Background" Value="Gray"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button  Content="动画测试" Style="{StaticResource ButtonInfo}" Margin="10,0,0,0"   Click="Button_Click_Ani" RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform >
+                        <RotateTransform Angle="0" x:Name="ButtonRotate1"/>
+                    </Button.RenderTransform>
+                </Button>
+            </StackPanel>
+           
+        </Grid>
+    </Grid>
+</Window>
