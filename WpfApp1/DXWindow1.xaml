@@ -18,7 +18,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <DataGrid BorderThickness="1" ItemsSource="{Binding MyProperty}"  AutoGenerateColumns="False" SelectedItem="{Binding SelectedProcess}" SelectionMode="Single" x:Name="DataGrid">
                 <DataGrid.Columns>
