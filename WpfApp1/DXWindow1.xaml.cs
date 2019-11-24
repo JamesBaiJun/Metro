@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using DevExpress.Xpf.Core;
-using HandyControl.Controls;
 using Window = System.Windows.Window;
 
 namespace WpfApp1
@@ -30,24 +20,24 @@ namespace WpfApp1
         {
             InitializeComponent();
             MyProperty = new ObservableCollectionCore<Process>();
-            foreach (var item in (Process.GetProcesses().OrderBy(x=>x.MainWindowTitle).ToList()))
+            foreach (var item in (Process.GetProcesses().OrderBy(x => x.MainWindowTitle).ToList()))
             {
                 MyProperty.Add(item);
             }
             MyProperty.OrderBy(x => x.MainWindowTitle);
             DataContext = this;
         }
-        
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedProcess!=null)
-            SelectedProcess.Kill();
+            if (SelectedProcess != null)
+                SelectedProcess.Kill();
         }
 
         private void Button_Click2(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void Button_Click_Ani(object sender, RoutedEventArgs e)
